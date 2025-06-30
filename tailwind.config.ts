@@ -20,7 +20,7 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				'inter': ['Inter', 'sans-serif'],
+				'poppins': ['Poppins', 'sans-serif'],
 				'mono': ['JetBrains Mono', 'monospace'],
 			},
 			colors: {
@@ -99,24 +99,13 @@ export default {
 						opacity: '1',
 						transform: 'translateX(0)'
 					}
-				},
-				'typing': {
-					'0%': { width: '0' },
-					'50%': { width: '100%' },
-					'100%': { width: '100%' }
-				},
-				'blink': {
-					'0%, 50%': { borderColor: 'transparent' },
-					'51%, 100%': { borderColor: 'currentColor' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.6s ease-out',
-				'slide-in': 'slide-in 0.6s ease-out',
-				'typing': 'typing 4s steps(40) infinite',
-				'blink': 'blink 1s step-end infinite'
+				'slide-in': 'slide-in 0.6s ease-out'
 			}
 		}
 	},

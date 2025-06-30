@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -42,7 +42,7 @@
   }
 
   body {
-    @apply bg-background text-foreground font-inter;
+    @apply bg-background text-foreground font-poppins;
     background: linear-gradient(135deg, hsl(222, 84%, 4.9%) 0%, hsl(217, 32%, 6%) 50%, hsl(222, 84%, 4.9%) 100%);
     min-height: 100vh;
   }
@@ -57,8 +57,8 @@
 }
 
 @layer utilities {
-  .font-inter {
-    font-family: 'Inter', sans-serif;
+  .font-poppins {
+    font-family: 'Poppins', sans-serif;
   }
   
   .font-mono {
