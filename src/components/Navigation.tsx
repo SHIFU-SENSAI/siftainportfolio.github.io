@@ -1,11 +1,14 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
+import { Menu, X } from 'lucide-react';
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
   const menuItemsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -23,22 +26,39 @@ const Navigation = () => {
       { y: -100 }, 
       { y: 0, duration: 0.6, ease: "power2.out" }
     );
-
-    if (menuItemsRef.current) {
-      const menuItems = menuItemsRef.current.children;
-      gsap.fromTo(menuItems,
-        { opacity: 0, y: -20 },
-        { 
-          opacity: 1, 
-          y: 0, 
-          duration: 0.4,
-          stagger: 0.1,
-          delay: 0.2,
-          ease: "power2.out"
-        }
-      );
-    }
   }, []);
+
+  useEffect(() => {
+    // Mobile menu animations
+    if (mobileMenuRef.current) {
+      if (isMobileMenuOpen) {
+        gsap.fromTo(mobileMenuRef.current,
+          { opacity: 0, y: -20 },
+          { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }
+        );
+        
+        const menuItems = mobileMenuRef.current.querySelectorAll('a');
+        gsap.fromTo(menuItems,
+          { opacity: 0, x: -20 },
+          { 
+            opacity: 1, 
+            x: 0, 
+            duration: 0.3,
+            stagger: 0.1,
+            delay: 0.1,
+            ease: "power2.out"
+          }
+        );
+      } else {
+        gsap.to(mobileMenuRef.current, {
+          opacity: 0,
+          y: -20,
+          duration: 0.2,
+          ease: "power2.in"
+        });
+      }
+    }
+  }, [isMobileMenuOpen]);
 
   const handleLogoHover = (scale: number) => {
     gsap.to(logoRef.current, { scale, duration: 0.2, ease: "power2.out" });
@@ -46,6 +66,10 @@ const Navigation = () => {
 
   const handleMenuItemHover = (item: HTMLElement, scale: number) => {
     gsap.to(item, { scale, duration: 0.2, ease: "power2.out" });
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   return (
@@ -68,7 +92,8 @@ const Navigation = () => {
             &lt;Siftain/&gt;
           </div>
 
-          <div ref={menuItemsRef} className="hidden md:flex items-center space-x-8">
+          {/* Desktop Menu - Hidden */}
+          <div ref={menuItemsRef} className="hidden lg:flex items-center space-x-8">
             {['About', 'Skills', 'Projects', 'Contact'].map((item) => (
               <a
                 key={item}
@@ -82,12 +107,35 @@ const Navigation = () => {
             ))}
           </div>
 
-          <button className="md:hidden text-blue-400">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
+          {/* Hamburger Menu Button */}
+          <button 
+            onClick={toggleMobileMenu}
+            className="text-blue-400 hover:text-blue-300 transition-colors duration-300 p-2"
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div
+            ref={mobileMenuRef}
+            className="mt-4 py-4 bg-slate-900/95 backdrop-blur-md rounded-lg border border-blue-400/20"
+          >
+            <div className="flex flex-col space-y-4 px-4">
+              {['About', 'Skills', 'Projects', 'Contact'].map((item) => (
+                <a
+                  key={item}
+                  href={`#${item.toLowerCase()}`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-blue-100 hover:text-blue-400 transition-colors duration-300 font-medium py-2 px-4 rounded-lg hover:bg-blue-800/20"
+                >
+                  {item}
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   );
