@@ -77,7 +77,7 @@ const Hero = () => {
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-[1fr,0.6fr] gap-8 items-center">
           {/* Left side - Content */}
           <div ref={contentRef} className="space-y-8">
             <div className="space-y-4">
@@ -101,7 +101,7 @@ const Hero = () => {
                 {programmingLanguages.map((lang, index) => (
                   <div
                     key={index}
-                    className="px-4 py-2 bg-blue-800/30 border border-blue-400/30 rounded-lg text-blue-100 font-mono text-sm hover:bg-blue-700/40 hover:border-blue-300/50 transition-all duration-300 cursor-default"
+                    className="px-4 py-2 bg-blue-800/30 border border-blue-400/30 rounded-lg text-blue-100 font-mono text-sm hover:bg-blue-600/40 hover:border-blue-300/60 hover:text-white transition-all duration-300 cursor-default"
                   >
                     {lang}
                   </div>
@@ -111,7 +111,7 @@ const Hero = () => {
 
             {/* CTA Buttons */}
             <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-4">
-              <button className="px-8 py-4 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-lg font-semibold hover:from-blue-600 hover:to-cyan-600 transition-all duration-300 shadow-lg hover:shadow-blue-500/25 hover:scale-105">
+              <button className="px-8 py-4 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition-all duration-300 shadow-lg hover:shadow-blue-500/25 hover:scale-105">
                 View My Projects
               </button>
               <button className="px-8 py-4 border-2 border-blue-400 text-blue-400 rounded-lg font-semibold hover:bg-blue-400 hover:text-white transition-all duration-300 hover:scale-105">
@@ -121,7 +121,7 @@ const Hero = () => {
           </div>
 
           {/* Right side - Image Circle */}
-          <div className="flex justify-center lg:justify-end">
+          <div className="flex justify-start lg:justify-center">
             <div className="relative">
               {/* Animated background shape */}
               <div
