@@ -15,7 +15,7 @@
     --popover: 222 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 217 91% 60%;
+    --primary: 200 100% 60%;
     --primary-foreground: 222 84% 4.9%;
 
     --secondary: 217 32% 17%;
@@ -24,7 +24,7 @@
     --muted: 215 28% 17%;
     --muted-foreground: 215 20% 65%;
 
-    --accent: 217 32% 17%;
+    --accent: 200 100% 60%;
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62% 30%;
@@ -32,7 +32,7 @@
 
     --border: 217 32% 17%;
     --input: 217 32% 17%;
-    --ring: 217 91% 60%;
+    --ring: 200 100% 60%;
 
     --radius: 0.75rem;
   }
@@ -48,7 +48,7 @@
   }
 
   .gradient-text {
-    @apply bg-gradient-to-r from-blue-400 via-purple-500 to-cyan-400 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent;
   }
 
   .glow-effect {

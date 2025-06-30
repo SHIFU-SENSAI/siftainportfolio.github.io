@@ -3,157 +3,147 @@ import { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 
 const Hero = () => {
-  const [currentSkill, setCurrentSkill] = useState(0);
-  const skills = ['C/C++', 'C#', 'JavaScript', 'Java', 'Assembly x86'];
-  
   const heroRef = useRef<HTMLDivElement>(null);
-  const nameRef = useRef<HTMLHeadingElement>(null);
-  const roleRef = useRef<HTMLDivElement>(null);
-  const descRef = useRef<HTMLParagraphElement>(null);
+  const imageCircleRef = useRef<HTMLDivElement>(null);
+  const animatedShapeRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const skillsRef = useRef<HTMLDivElement>(null);
   const buttonsRef = useRef<HTMLDivElement>(null);
-  const skillRef = useRef<HTMLSpanElement>(null);
-  const particlesRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSkill((prev) => (prev + 1) % skills.length);
-    }, 2000);
-    return () => clearInterval(interval);
-  }, [skills.length]);
+  const programmingLanguages = ['C/C++', 'C#', 'JavaScript', 'Java', 'Assembly x86'];
 
   useEffect(() => {
     // Initial animations
     const tl = gsap.timeline();
     
-    // Animate main elements
-    tl.fromTo(nameRef.current, 
-      { opacity: 0, y: 30 }, 
-      { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }
+    // Animate content from left
+    tl.fromTo(contentRef.current, 
+      { opacity: 0, x: -50 }, 
+      { opacity: 1, x: 0, duration: 0.8, ease: "power2.out" }
     )
-    .fromTo(roleRef.current, 
-      { opacity: 0 }, 
-      { opacity: 1, duration: 0.6, ease: "power2.out" }, 
+    // Animate image circle from right
+    .fromTo(imageCircleRef.current, 
+      { opacity: 0, x: 50, scale: 0.8 }, 
+      { opacity: 1, x: 0, scale: 1, duration: 0.8, ease: "power2.out" }, 
+      "-=0.6"
+    )
+    // Animate skills boxes
+    .fromTo(skillsRef.current?.children || [], 
+      { opacity: 0, y: 30 }, 
+      { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: "power2.out" }, 
       "-=0.4"
     )
-    .fromTo(descRef.current, 
-      { opacity: 0 }, 
-      { opacity: 1, duration: 0.6, ease: "power2.out" }, 
-      "-=0.3"
-    )
-    .fromTo(buttonsRef.current, 
+    // Animate buttons
+    .fromTo(buttonsRef.current?.children || [], 
       { opacity: 0, y: 20 }, 
-      { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, 
-      "-=0.2"
+      { opacity: 1, y: 0, duration: 0.6, stagger: 0.2, ease: "power2.out" }, 
+      "-=0.3"
     );
 
-    // Animate particles
-    if (particlesRef.current) {
-      const particles = particlesRef.current.children;
-      Array.from(particles).forEach((particle, index) => {
-        gsap.fromTo(particle,
-          { opacity: 0.2, y: 0 },
-          {
-            opacity: 0.5,
-            y: -20,
-            duration: 3 + Math.random() * 2,
-            repeat: -1,
-            yoyo: true,
-            delay: Math.random() * 2,
-            ease: "power2.inOut"
-          }
-        );
+    // Animated shape behind circle
+    if (animatedShapeRef.current) {
+      gsap.to(animatedShapeRef.current, {
+        rotation: 360,
+        duration: 20,
+        repeat: -1,
+        ease: "none"
+      });
+
+      gsap.to(animatedShapeRef.current, {
+        scale: 1.1,
+        duration: 3,
+        repeat: -1,
+        yoyo: true,
+        ease: "power2.inOut"
       });
     }
   }, []);
 
-  useEffect(() => {
-    // Animate skill change
-    if (skillRef.current) {
-      gsap.fromTo(skillRef.current,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }
-      );
-    }
-  }, [currentSkill]);
-
-  const handleButtonHover = (button: HTMLElement, scale: number) => {
-    gsap.to(button, { scale, duration: 0.2, ease: "power2.out" });
-  };
-
   return (
-    <section ref={heroRef} className="min-h-screen flex items-center justify-center relative overflow-hidden">
-      {/* Background particles effect */}
-      <div ref={particlesRef} className="absolute inset-0 overflow-hidden">
-        {[...Array(50)].map((_, i) => (
+    <section ref={heroRef} className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
+      {/* Background particles */}
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(30)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-1 h-1 bg-blue-400 rounded-full opacity-20"
+            className="absolute w-1 h-1 bg-blue-300 rounded-full opacity-20"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 3}s`,
             }}
           />
         ))}
       </div>
 
-      <div className="container mx-auto px-6 text-center relative z-10">
-        <div className="space-y-8">
-          {/* Name */}
-          <h1
-            ref={nameRef}
-            className="text-5xl md:text-7xl font-bold gradient-text mb-4"
-          >
-            I'm Siftain
-          </h1>
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Left side - Content */}
+          <div ref={contentRef} className="space-y-8">
+            <div className="space-y-4">
+              <h1 className="text-5xl md:text-6xl font-bold text-white leading-tight">
+                Hi, I'm{' '}
+                <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+                  Siftain
+                </span>
+              </h1>
+              <p className="text-xl text-blue-100 leading-relaxed max-w-lg">
+                A passionate 3rd year Computer Science student at BIT Mesra, 
+                dedicated to exploring system programming, web development, 
+                and the fascinating world of computer architecture.
+              </p>
+            </div>
 
-          {/* Dynamic typing effect for role */}
-          <div
-            ref={roleRef}
-            className="text-2xl md:text-3xl text-muted-foreground font-light mb-6"
-          >
-            <span>Student Developer specializing in </span>
-            <span
-              ref={skillRef}
-              className="text-primary font-mono font-semibold"
-            >
-              {skills[currentSkill]}
-            </span>
+            {/* Programming Languages */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-blue-200">Technologies I work with:</h3>
+              <div ref={skillsRef} className="flex flex-wrap gap-3">
+                {programmingLanguages.map((lang, index) => (
+                  <div
+                    key={index}
+                    className="px-4 py-2 bg-blue-800/30 border border-blue-400/30 rounded-lg text-blue-100 font-mono text-sm hover:bg-blue-700/40 hover:border-blue-300/50 transition-all duration-300 cursor-default"
+                  >
+                    {lang}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* CTA Buttons */}
+            <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-4">
+              <button className="px-8 py-4 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-lg font-semibold hover:from-blue-600 hover:to-cyan-600 transition-all duration-300 shadow-lg hover:shadow-blue-500/25 hover:scale-105">
+                View My Projects
+              </button>
+              <button className="px-8 py-4 border-2 border-blue-400 text-blue-400 rounded-lg font-semibold hover:bg-blue-400 hover:text-white transition-all duration-300 hover:scale-105">
+                Get In Touch
+              </button>
+            </div>
           </div>
 
-          {/* Description */}
-          <p
-            ref={descRef}
-            className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed"
-          >
-            3rd year Computer Science student at BIT Mesra, passionate about system programming, 
-            web development, and exploring the depths of computer architecture.
-          </p>
-
-          {/* CTA Buttons */}
-          <div
-            ref={buttonsRef}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8"
-          >
-            <button
-              onMouseEnter={(e) => handleButtonHover(e.currentTarget, 1.05)}
-              onMouseLeave={(e) => handleButtonHover(e.currentTarget, 1)}
-              className="px-8 py-4 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-all duration-300 glow-effect"
-            >
-              View My Work
-            </button>
-            <button
-              onMouseEnter={(e) => handleButtonHover(e.currentTarget, 1.05)}
-              onMouseLeave={(e) => handleButtonHover(e.currentTarget, 1)}
-              className="px-8 py-4 border border-primary/30 text-primary rounded-lg font-semibold hover:bg-primary/10 transition-all duration-300"
-            >
-              Contact Me
-            </button>
-          </div>
-
-          {/* Scroll indicator */}
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-            <div className="w-6 h-10 border-2 border-primary/30 rounded-full flex justify-center">
-              <div className="w-1 h-3 bg-primary rounded-full mt-2" />
+          {/* Right side - Image Circle */}
+          <div className="flex justify-center lg:justify-end">
+            <div className="relative">
+              {/* Animated background shape */}
+              <div
+                ref={animatedShapeRef}
+                className="absolute inset-0 w-80 h-80 rounded-full bg-gradient-to-r from-blue-500/20 to-cyan-500/20 blur-xl"
+                style={{
+                  clipPath: 'polygon(50% 0%, 80% 10%, 100% 35%, 100% 70%, 80% 90%, 50% 100%, 20% 90%, 0% 70%, 0% 35%, 20% 10%)'
+                }}
+              />
+              
+              {/* Image circle */}
+              <div
+                ref={imageCircleRef}
+                className="relative w-80 h-80 rounded-full bg-gradient-to-br from-blue-400 to-cyan-400 p-2 shadow-2xl"
+              >
+                <div className="w-full h-full rounded-full bg-slate-800 flex items-center justify-center overflow-hidden">
+                  {/* Placeholder for your image */}
+                  <div className="w-full h-full bg-gradient-to-br from-blue-600 to-cyan-600 rounded-full flex items-center justify-center">
+                    <span className="text-4xl font-bold text-white">S</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
