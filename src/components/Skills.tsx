@@ -80,7 +80,7 @@ const Skills = () => {
   };
 
   return (
-    <section ref={sectionRef} className="py-20 px-6">
+    <section ref={sectionRef} id="skills" className="py-20 px-6">
       <div className="container mx-auto">
         <div
           ref={titleRef}

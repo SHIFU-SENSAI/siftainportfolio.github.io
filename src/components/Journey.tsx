@@ -144,7 +144,7 @@ const Journey = () => {
                 <div
                   onMouseEnter={(e) => handleItemHover(e.currentTarget, 1.05, -5)}
                   onMouseLeave={(e) => handleItemHover(e.currentTarget, 1, 0)}
-                  className={`relative bg-card/50 backdrop-blur-sm border border-border rounded-lg p-6 max-w-md cursor-pointer transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 ${
+                  className={`relative bg-card/50 backdrop-blur-sm border border-border rounded-lg p-6 max-w-md cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-primary/20 hover:bg-primary/5 hover:border-primary/30 ${
                     index % 2 === 0 ? 'mr-8' : 'ml-8'
                   }`}
                 >
@@ -156,25 +156,25 @@ const Journey = () => {
                   />
                   
                   {/* Year badge */}
-                  <div className={`inline-block px-3 py-1 rounded-full text-xs font-bold mb-3 ${
+                  <div className={`inline-block px-3 py-1 rounded-full text-xs font-bold mb-3 transition-all duration-300 group-hover:scale-105 ${
                     item.type === 'academic' 
-                      ? 'bg-accent/20 text-accent' 
-                      : 'bg-primary/20 text-primary'
+                      ? 'bg-accent/20 text-accent hover:bg-accent/30 hover:text-accent' 
+                      : 'bg-primary/20 text-primary hover:bg-primary/30 hover:text-primary'
                   }`}>
                     {item.year}
                   </div>
                   
-                  <h3 className="font-bold text-lg text-foreground mb-2">
+                  <h3 className="font-bold text-lg text-foreground mb-2 transition-colors duration-300 hover:text-primary">
                     {item.title}
                   </h3>
                   
-                  <p className="text-muted-foreground text-sm leading-relaxed">
+                  <p className="text-muted-foreground text-sm leading-relaxed transition-colors duration-300 hover:text-foreground">
                     {item.description}
                   </p>
                   
                   {/* Type indicator */}
-                  <div className={`mt-3 text-xs font-semibold ${
-                    item.type === 'academic' ? 'text-accent' : 'text-primary'
+                  <div className={`mt-3 text-xs font-semibold transition-all duration-300 ${
+                    item.type === 'academic' ? 'text-accent hover:text-accent/80' : 'text-primary hover:text-primary/80'
                   }`}>
                     {item.type === 'academic' ? '📚 Academic' : '💻 Coding'}
                   </div>
