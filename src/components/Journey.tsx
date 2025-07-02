@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import TextReveal from './TextReveal';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -117,10 +118,10 @@ const Journey = () => {
           ref={titleRef}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold gradient-text mb-4">My Journey</h2>
-          <p className="text-muted-foreground text-lg">
+          <TextReveal className="text-4xl font-bold gradient-text mb-4">My Journey</TextReveal>
+          <TextReveal className="text-muted-foreground text-lg" delay={0.2}>
             From first line of code to where I am today
-          </p>
+          </TextReveal>
         </div>
 
         <div className="relative max-w-4xl mx-auto">

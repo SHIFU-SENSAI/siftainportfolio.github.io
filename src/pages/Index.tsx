@@ -5,10 +5,16 @@ import Skills from '@/components/Skills';
 import Projects from '@/components/Projects';
 import Journey from '@/components/Journey';
 import Contact from '@/components/Contact';
+import CursorParticles from '@/components/CursorParticles';
+import ThemeSwitcher from '@/components/ThemeSwitcher';
+import ScrollProgress from '@/components/ScrollProgress';
 
 const Index = () => {
   return (
     <div className="min-h-screen">
+      <CursorParticles />
+      <ScrollProgress />
+      <ThemeSwitcher />
       <Navigation />
       <Hero />
       <Skills />

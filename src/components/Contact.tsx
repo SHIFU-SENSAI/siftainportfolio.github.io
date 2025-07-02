@@ -3,6 +3,8 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import TextReveal from './TextReveal';
+import MagneticButton from './MagneticButton';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -96,10 +98,10 @@ const Contact = () => {
           ref={titleRef}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold gradient-text mb-4">Get In Touch</h2>
-          <p className="text-muted-foreground text-lg">
+          <TextReveal className="text-4xl font-bold gradient-text mb-4">Get In Touch</TextReveal>
+          <TextReveal className="text-muted-foreground text-lg" delay={0.2}>
             Let's connect and discuss opportunities
-          </p>
+          </TextReveal>
         </div>
 
         <div ref={contactGridRef} className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto mb-12">
@@ -136,9 +138,9 @@ const Contact = () => {
               Whether you're a company looking to hire, or you're a developer looking to collaborate, 
               I'd love to hear from you.
             </p>
-            <Button size="lg" className="px-8 py-4">
+            <MagneticButton className="px-8 py-4 bg-primary text-primary-foreground rounded-lg font-semibold hover:scale-105 transition-all duration-300">
               Start a Conversation
-            </Button>
+            </MagneticButton>
           </div>
         </div>
       </div>

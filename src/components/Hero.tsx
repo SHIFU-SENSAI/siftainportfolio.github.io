@@ -1,6 +1,8 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
+import MagneticButton from './MagneticButton';
+import TextReveal from './TextReveal';
 
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -81,17 +83,17 @@ const Hero = () => {
           {/* Left side - Content */}
           <div ref={contentRef} className="space-y-8">
             <div className="space-y-4">
-              <h1 className="text-5xl md:text-6xl font-bold text-white leading-tight">
+              <TextReveal className="text-5xl md:text-6xl font-bold text-white leading-tight">
                 Hi, I'm{' '}
                 <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
                   Siftain
                 </span>
-              </h1>
-              <p className="text-xl text-blue-100 leading-relaxed max-w-lg">
+              </TextReveal>
+              <TextReveal className="text-xl text-blue-100 leading-relaxed max-w-lg" delay={0.3}>
                 A passionate 3rd year Computer Science student at BIT Mesra, 
                 dedicated to exploring system programming, web development, 
                 and the fascinating world of computer architecture.
-              </p>
+              </TextReveal>
             </div>
 
             {/* Programming Languages */}
@@ -111,12 +113,18 @@ const Hero = () => {
 
             {/* CTA Buttons */}
             <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-4">
-              <button className="px-8 py-4 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition-all duration-300 shadow-lg hover:shadow-blue-500/25 hover:scale-105">
+              <MagneticButton 
+                className="px-8 py-4 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition-all duration-300 shadow-lg hover:shadow-blue-500/25"
+                onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+              >
                 View My Projects
-              </button>
-              <button className="px-8 py-4 border-2 border-blue-400 text-blue-400 rounded-lg font-semibold hover:bg-blue-400 hover:text-white transition-all duration-300 hover:scale-105">
+              </MagneticButton>
+              <MagneticButton 
+                className="px-8 py-4 border-2 border-blue-400 text-blue-400 rounded-lg font-semibold hover:bg-blue-400 hover:text-white transition-all duration-300"
+                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              >
                 Get In Touch
-              </button>
+              </MagneticButton>
             </div>
           </div>
 

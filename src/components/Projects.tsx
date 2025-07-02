@@ -3,6 +3,8 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import TextReveal from './TextReveal';
+import MagneticButton from './MagneticButton';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -90,10 +92,10 @@ const Projects = () => {
           ref={titleRef}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold gradient-text mb-4">Featured Projects</h2>
-          <p className="text-muted-foreground text-lg">
+          <TextReveal className="text-4xl font-bold gradient-text mb-4">Featured Projects</TextReveal>
+          <TextReveal className="text-muted-foreground text-lg" delay={0.2}>
             Some of the projects I've worked on
-          </p>
+          </TextReveal>
         </div>
 
         <div ref={projectsGridRef} className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">

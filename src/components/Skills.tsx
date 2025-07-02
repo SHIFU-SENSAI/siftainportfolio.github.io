@@ -2,6 +2,7 @@
 import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import TextReveal from './TextReveal';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -86,10 +87,10 @@ const Skills = () => {
           ref={titleRef}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold gradient-text mb-4">Technical Skills</h2>
-          <p className="text-muted-foreground text-lg">
+          <TextReveal className="text-4xl font-bold gradient-text mb-4">Technical Skills</TextReveal>
+          <TextReveal className="text-muted-foreground text-lg" delay={0.2}>
             Languages and technologies I work with
-          </p>
+          </TextReveal>
         </div>
 
         <div ref={skillsGridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-4xl mx-auto">
