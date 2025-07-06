@@ -1,4 +1,3 @@
-
 import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -87,7 +86,7 @@ const Skills = () => {
           ref={titleRef}
           className="text-center mb-16"
         >
-          <TextReveal className="text-4xl font-bold gradient-text mb-4">Technical Skills</TextReveal>
+          <TextReveal className="text-4xl font-bold text-foreground mb-4">Technical Skills</TextReveal>
           <TextReveal className="text-muted-foreground text-lg" delay={0.2}>
             Languages and technologies I work with
           </TextReveal>
@@ -102,7 +101,7 @@ const Skills = () => {
               className="bg-card/50 backdrop-blur-sm border border-border rounded-lg p-6 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 cursor-pointer"
             >
               <div className="flex items-center justify-between mb-4">
-                <h3 className="font-semibold text-lg font-mono">{skill.name}</h3>
+                <h3 className="font-semibold text-lg font-mono text-foreground">{skill.name}</h3>
                 <span className="text-primary font-bold">{skill.level}%</span>
               </div>
               <div className="w-full bg-muted rounded-full h-2 overflow-hidden">

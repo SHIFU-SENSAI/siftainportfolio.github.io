@@ -92,7 +92,7 @@ const Projects = () => {
           ref={titleRef}
           className="text-center mb-16"
         >
-          <TextReveal className="text-4xl font-bold gradient-text mb-4">Featured Projects</TextReveal>
+          <TextReveal className="text-4xl font-bold text-foreground mb-4">Featured Projects</TextReveal>
           <TextReveal className="text-muted-foreground text-lg" delay={0.2}>
             Some of the projects I've worked on
           </TextReveal>
@@ -124,10 +124,10 @@ const Projects = () => {
                   ))}
                 </div>
                 <div className="flex gap-4">
-                  <Button variant="default" size="sm">
+                  <Button variant="default" size="sm" className="text-primary-foreground bg-primary hover:bg-accent hover:text-accent-foreground">
                     View Demo
                   </Button>
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" className="border-primary text-primary bg-transparent hover:bg-primary hover:text-primary-foreground">
                     GitHub
                   </Button>
                 </div>

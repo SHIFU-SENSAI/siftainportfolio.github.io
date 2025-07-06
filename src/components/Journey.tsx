@@ -118,7 +118,7 @@ const Journey = () => {
           ref={titleRef}
           className="text-center mb-16"
         >
-          <TextReveal className="text-4xl font-bold gradient-text mb-4">My Journey</TextReveal>
+          <TextReveal className="text-4xl font-bold text-foreground mb-4">My Journey</TextReveal>
           <TextReveal className="text-muted-foreground text-lg" delay={0.2}>
             From first line of code to where I am today
           </TextReveal>

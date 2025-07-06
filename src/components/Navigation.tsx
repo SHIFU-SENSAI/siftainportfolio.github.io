@@ -1,105 +1,107 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const navRef = useRef<HTMLElement>(null);
-  const logoRef = useRef<HTMLDivElement>(null);
   const menuItemsRef = useRef<HTMLDivElement>(null);
+  const navContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
-    // Initial animations
-    gsap.fromTo(navRef.current, 
-      { y: -100 }, 
-      { y: 0, duration: 0.6, ease: "power2.out" }
-    );
+    gsap.fromTo(navRef.current, { y: -100 }, { y: 0, duration: 0.6, ease: 'power2.out' });
   }, []);
 
-  useEffect(() => {
-    // Menu items animation on load
+  const handleNavHover = (hovering: boolean) => {
+    setIsHovered(hovering);
+    if (navContainerRef.current) {
+      if (hovering) {
+        gsap.to(navContainerRef.current, {
+          width: '400px',
+          duration: 0.3,
+          ease: 'power2.out',
+        });
+      } else {
+        gsap.to(navContainerRef.current, {
+          width: '270px',
+          duration: 0.3,
+          ease: 'power2.out',
+          onComplete: () => {
+            if (navContainerRef.current) {
+              navContainerRef.current.style.width = '';
+            }
+          }
+        });
+      }
+    }
     if (menuItemsRef.current) {
       const menuItems = menuItemsRef.current.children;
-      gsap.fromTo(menuItems,
-        { opacity: 0, y: -20 },
-        { 
-          opacity: 1, 
-          y: 0, 
-          duration: 0.4,
-          stagger: 0.1,
-          delay: 0.3,
-          ease: "power2.out"
-        }
-      );
+      gsap.to(menuItems, {
+        opacity: 1,
+        scale: 1,
+        duration: 0.3,
+        stagger: hovering ? 0.05 : 0,
+        ease: 'power2.out',
+      });
     }
-  }, []);
-
-  const handleLogoHover = (scale: number) => {
-    gsap.to(logoRef.current, { scale, duration: 0.2, ease: "power2.out" });
-  };
-
-  const handleMenuItemHover = (item: HTMLElement, scale: number) => {
-    gsap.to(item, { scale, duration: 0.2, ease: "power2.out" });
   };
 
   const handleSmoothScroll = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
+
+  const menuItems = [
+    { name: 'Home', id: 'hero', icon: '🏠' },
+    { name: 'Skills', id: 'skills', icon: '⚡' },
+    { name: 'Projects', id: 'projects', icon: '💼' },
+    { name: 'Journey', id: 'journey', icon: '🚀' },
+    { name: 'Contact', id: 'contact', icon: '📧' },
+  ];
 
   return (
     <nav
       ref={navRef}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled 
-          ? 'bg-slate-900/80 backdrop-blur-md border-b border-blue-400/20' 
-          : 'bg-transparent'
-      }`}
+      className={`fixed top-6 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-300 ${isScrolled ? 'scale-95' : 'scale-100'}`}
     >
-      <div className="container mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
-          <div
-            ref={logoRef}
-            onMouseEnter={() => handleLogoHover(1.05)}
-            onMouseLeave={() => handleLogoHover(1)}
-            className="font-bold text-xl bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent font-mono cursor-pointer"
-          >
-            &lt;Siftain/&gt;
-          </div>
-
-          {/* Desktop Menu */}
-          <div ref={menuItemsRef} className="flex items-center space-x-8">
-            {[
-              { name: 'Skills', id: 'skills' },
-              { name: 'Projects', id: 'projects' },
-              { name: 'Journey', id: 'journey' },
-              { name: 'Contact', id: 'contact' }
-            ].map((item) => (
+      <div
+        ref={navContainerRef}
+        onMouseEnter={() => handleNavHover(true)}
+        onMouseLeave={() => handleNavHover(false)}
+        className="w-[270px] h-14 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:shadow-blue-500/25 hover:border-blue-400/30"
+      >
+        <div ref={menuItemsRef} className="flex items-center justify-center space-x-4 w-full">
+          {menuItems.map((item) => (
+            <div key={item.name} className="relative group flex flex-col items-center">
               <button
-                key={item.name}
                 onClick={() => handleSmoothScroll(item.id)}
-                onMouseEnter={(e) => handleMenuItemHover(e.currentTarget, 1.1)}
-                onMouseLeave={(e) => handleMenuItemHover(e.currentTarget, 1)}
-                className="text-blue-100 hover:text-blue-400 transition-colors duration-300 font-medium cursor-pointer"
+                className="w-9 h-9 flex items-center justify-center text-blue-200 hover:text-blue-400 transition-all duration-300 rounded-full hover:bg-blue-400/20 group-hover:scale-110 text-xl"
+                aria-label={item.name}
+              >
+                <span>{item.icon}</span>
+              </button>
+              {/* Tooltip label on hover and navbar hover */}
+              <div
+                className={`absolute top-11 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-slate-800/90 backdrop-blur-sm border border-blue-400/20 rounded text-xs text-blue-100 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none ${
+                  isHovered ? 'translate-y-0' : 'translate-y-2'
+                }`}
+                style={{ minWidth: '60px' }}
               >
                 {item.name}
-              </button>
-            ))}
-          </div>
+                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-2 w-2 h-2 bg-slate-800/90 border-l border-t border-blue-400/20 rotate-45"></div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </nav>

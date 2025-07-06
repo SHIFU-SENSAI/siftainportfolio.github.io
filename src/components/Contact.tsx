@@ -13,19 +13,19 @@ const Contact = () => {
     {
       title: "Email",
       description: "Drop me a line anytime",
-      contact: "siftain@example.com",
+      contact: "ahmadsiftain89@gmail.com",
       action: "Send Email"
     },
     {
       title: "LinkedIn",
       description: "Let's connect professionally",
-      contact: "/in/siftain",
+      contact: "Siftain",
       action: "Connect"
     },
     {
       title: "GitHub",
       description: "Check out my code",
-      contact: "@siftain",
+      contact: "Siftain",
       action: "Follow"
     }
   ];
@@ -98,7 +98,7 @@ const Contact = () => {
           ref={titleRef}
           className="text-center mb-16"
         >
-          <TextReveal className="text-4xl font-bold gradient-text mb-4">Get In Touch</TextReveal>
+          <TextReveal className="text-4xl font-bold text-foreground mb-4">Get In Touch</TextReveal>
           <TextReveal className="text-muted-foreground text-lg" delay={0.2}>
             Let's connect and discuss opportunities
           </TextReveal>
@@ -120,9 +120,30 @@ const Contact = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-primary font-mono mb-4">{method.contact}</p>
-                <Button variant="outline" size="sm" className="w-full">
-                  {method.action}
-                </Button>
+                {method.title === "Email" ? (
+                  <a href={`mailto:${method.contact}`} className="w-full block">
+                    <Button variant="outline" size="sm" className="w-full border-primary text-primary bg-transparent hover:bg-primary hover:text-primary-foreground">
+                      {method.action}
+                    </Button>
+                  </a>
+                ) : (
+                  <a
+                    href={
+                      method.title === "LinkedIn"
+                        ? `https://linkedin.com${method.contact}`
+                        : method.title === "GitHub"
+                        ? `https://github.com/${method.contact.replace("@", "")}`
+                        : "#"
+                    }
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full block"
+                  >
+                    <Button variant="outline" size="sm" className="w-full border-primary text-primary bg-transparent hover:bg-primary hover:text-primary-foreground">
+                      {method.action}
+                    </Button>
+                  </a>
+                )}
               </CardContent>
             </Card>
           ))}

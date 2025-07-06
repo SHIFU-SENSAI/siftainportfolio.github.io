@@ -3,7 +3,7 @@ import { gsap } from 'gsap';
 
 const themes = [
   {
-    name: 'Default',
+    name: 'Blue',
     colors: {
       primary: '200 100% 60%',
       accent: '200 100% 60%',
@@ -12,30 +12,12 @@ const themes = [
     }
   },
   {
-    name: 'Purple',
+    name: 'Black',
     colors: {
-      primary: '270 100% 70%',
-      accent: '280 100% 70%',
-      background: '260 84% 4.9%',
-      foreground: '280 40% 98%',
-    }
-  },
-  {
-    name: 'Green',
-    colors: {
-      primary: '140 100% 60%',
-      accent: '150 100% 60%',
-      background: '140 84% 4.9%',
-      foreground: '140 40% 98%',
-    }
-  },
-  {
-    name: 'Orange',
-    colors: {
-      primary: '30 100% 60%',
-      accent: '40 100% 60%',
-      background: '20 84% 4.9%',
-      foreground: '30 40% 98%',
+      primary: '0 0% 20%',
+      accent: '0 0% 40%',
+      background: '0 0% 0%',
+      foreground: '0 0% 100%',
     }
   }
 ];
