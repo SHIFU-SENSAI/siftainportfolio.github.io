@@ -13,7 +13,7 @@ const Contact = () => {
     {
       title: "Email",
       description: "Drop me a line anytime",
-      contact: "ahmadsiftain89@gmail.com",
+      contact: "hi there",
       action: "Send Email"
     },
     {
@@ -130,9 +130,9 @@ const Contact = () => {
                   <a
                     href={
                       method.title === "LinkedIn"
-                        ? `https://linkedin.com${method.contact}`
+                        ? "https://www.linkedin.com/in/siftainahmad/"
                         : method.title === "GitHub"
-                        ? `https://github.com/${method.contact.replace("@", "")}`
+                        ? `https://github.com/SHIFU-SENSAI`
                         : "#"
                     }
                     target="_blank"
