@@ -5,6 +5,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import TextReveal from './TextReveal';
 import MagneticButton from './MagneticButton';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from '@/components/ui/dialog';
+import { useState } from 'react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,6 +15,7 @@ const Projects = () => {
     {
       title: "System Monitor",
       description: "A real-time system monitoring tool built with C++ that tracks CPU, memory, and process information.",
+      details: `System Monitor is a desktop application built using C++ and Qt for Linux systems. It provides real-time monitoring of CPU usage, memory consumption, and running processes. The tool features a graphical interface for easy visualization, process management (kill/suspend), and customizable update intervals. It is designed for performance and low resource usage, making it ideal for developers and power users who want insight into their system's health.`,
       tech: ["C++", "Qt", "Linux"],
       github: "#",
       demo: "#"
@@ -20,6 +23,7 @@ const Projects = () => {
     {
       title: "Web Portfolio",
       description: "A responsive portfolio website showcasing my projects and skills with modern web technologies.",
+      details: `This portfolio is built with React, TypeScript, and Tailwind CSS. It features smooth animations, a dark/light theme switcher, and a mobile-friendly design. The site highlights my projects, skills, and contact information, and is optimized for fast loading and SEO. It serves as a central hub for my professional presence online.`,
       tech: ["React", "TypeScript", "Tailwind"],
       github: "#",
       demo: "#"
@@ -27,6 +31,7 @@ const Projects = () => {
     {
       title: "Assembly Calculator",
       description: "A basic calculator implementation using x86 assembly language for educational purposes.",
+      details: `Assembly Calculator is a command-line calculator written in x86 NASM assembly for Linux. It supports basic arithmetic operations (add, subtract, multiply, divide) and demonstrates low-level programming concepts such as stack manipulation, system calls, and input/output handling. The project is intended as a learning resource for those interested in assembly language programming.`,
       tech: ["Assembly", "NASM", "Linux"],
       github: "#",
       demo: "#"
@@ -34,6 +39,7 @@ const Projects = () => {
     {
       title: "Game Engine",
       description: "A simple 2D game engine built from scratch using C++ and OpenGL for learning graphics programming.",
+      details: `This project is a lightweight 2D game engine developed in C++ with OpenGL and GLFW. It provides a basic rendering pipeline, sprite management, input handling, and a simple physics system. The engine is modular and extensible, making it a great starting point for learning about game development and graphics programming at a low level.`,
       tech: ["C++", "OpenGL", "GLFW"],
       github: "#",
       demo: "#"
@@ -43,6 +49,7 @@ const Projects = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const projectsGridRef = useRef<HTMLDivElement>(null);
+  const [selectedProject, setSelectedProject] = useState<null | typeof projects[0]>(null);
 
   useEffect(() => {
     // Title animation
@@ -105,6 +112,7 @@ const Projects = () => {
               onMouseEnter={(e) => handleCardHover(e.currentTarget, 1.02)}
               onMouseLeave={(e) => handleCardHover(e.currentTarget, 1)}
               className="bg-card/50 backdrop-blur-sm border-border hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 cursor-pointer"
+              onClick={() => setSelectedProject(project)}
             >
               <CardHeader>
                 <CardTitle className="text-xl font-bold text-foreground">{project.title}</CardTitle>
@@ -130,12 +138,51 @@ const Projects = () => {
                   <Button variant="outline" size="sm" className="border-primary text-primary bg-transparent hover:bg-primary hover:text-primary-foreground">
                     GitHub
                   </Button>
+                  <Button variant="ghost" size="sm" className="ml-auto text-xs underline" onClick={(e) => { e.stopPropagation(); setSelectedProject(project); }}>
+                    View Details
+                  </Button>
                 </div>
               </CardContent>
             </Card>
           ))}
         </div>
       </div>
+
+      {/* Project Details Modal */}
+      <Dialog open={!!selectedProject} onOpenChange={(open) => { if (!open) setSelectedProject(null); }}>
+        <DialogContent>
+          {selectedProject && (
+            <>
+              <DialogHeader>
+                <DialogTitle>{selectedProject.title}</DialogTitle>
+                <DialogDescription>{selectedProject.description}</DialogDescription>
+              </DialogHeader>
+              <div className="my-4 text-sm text-foreground whitespace-pre-line">{selectedProject.details}</div>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {selectedProject.tech.map((tech) => (
+                  <span
+                    key={tech}
+                    className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-mono"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+              <div className="flex gap-4">
+                <a href={selectedProject.demo} target="_blank" rel="noopener noreferrer">
+                  <Button variant="default" size="sm">View Demo</Button>
+                </a>
+                <a href={selectedProject.github} target="_blank" rel="noopener noreferrer">
+                  <Button variant="outline" size="sm">GitHub</Button>
+                </a>
+                <DialogClose asChild>
+                  <Button variant="ghost" size="sm">Close</Button>
+                </DialogClose>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </section>
   );
 };

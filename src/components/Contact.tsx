@@ -1,10 +1,11 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import TextReveal from './TextReveal';
 import MagneticButton from './MagneticButton';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from '@/components/ui/dialog';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,7 +14,7 @@ const Contact = () => {
     {
       title: "Email",
       description: "Drop me a line anytime",
-      contact: "hi there",
+      contact: "your@email.com",
       action: "Send Email"
     },
     {
@@ -34,6 +35,37 @@ const Contact = () => {
   const titleRef = useRef<HTMLDivElement>(null);
   const contactGridRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [status, setStatus] = useState<'idle' | 'success' | 'error' | 'loading'>('idle');
+
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('loading');
+    try {
+      const res = await fetch('https://formspree.io/f/mdkzrbpo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          message: form.message
+        })
+      });
+      if (res.ok) {
+        setStatus('success');
+        setForm({ name: '', email: '', message: '' });
+      } else {
+        setStatus('error');
+      }
+    } catch {
+      setStatus('error');
+    }
+  };
 
   useEffect(() => {
     // Title animation
@@ -159,9 +191,59 @@ const Contact = () => {
               Whether you're a company looking to hire, or you're a developer looking to collaborate, 
               I'd love to hear from you.
             </p>
-            <MagneticButton className="px-8 py-4 bg-primary text-primary-foreground rounded-lg font-semibold hover:scale-105 transition-all duration-300">
+            <MagneticButton className="px-8 py-4 bg-primary text-primary-foreground rounded-lg font-semibold hover:scale-105 transition-all duration-300" onClick={() => setOpen(true)}>
               Start a Conversation
             </MagneticButton>
+            <Dialog open={open} onOpenChange={setOpen}>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Contact Me</DialogTitle>
+                  <DialogDescription>Send me a message directly to my email.</DialogDescription>
+                </DialogHeader>
+                {status === 'success' ? (
+                  <div className="text-green-600 font-semibold py-8 text-center">Thank you! Your message has been sent.</div>
+                ) : (
+                  <form className="space-y-4" onSubmit={handleSubmit}>
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="Your Name"
+                      className="w-full px-4 py-2 rounded bg-background border border-border focus:outline-none"
+                      value={form.name}
+                      onChange={handleFormChange}
+                      required
+                    />
+                    <input
+                      type="email"
+                      name="email"
+                      placeholder="Your Email"
+                      className="w-full px-4 py-2 rounded bg-background border border-border focus:outline-none"
+                      value={form.email}
+                      onChange={handleFormChange}
+                      required
+                    />
+                    <textarea
+                      name="message"
+                      placeholder="Your Message"
+                      className="w-full px-4 py-2 rounded bg-background border border-border focus:outline-none"
+                      rows={4}
+                      value={form.message}
+                      onChange={handleFormChange}
+                      required
+                    />
+                    <div className="flex gap-2 justify-end">
+                      <DialogClose asChild>
+                        <Button type="button" variant="ghost">Cancel</Button>
+                      </DialogClose>
+                      <Button type="submit" variant="default" disabled={status==='loading'}>
+                        {status==='loading' ? 'Sending...' : 'Send'}
+                      </Button>
+                    </div>
+                    {status === 'error' && <div className="text-red-600 text-sm mt-2">Something went wrong. Please try again.</div>}
+                  </form>
+                )}
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
       </div>
