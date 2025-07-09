@@ -5,8 +5,6 @@ import TextReveal from './TextReveal';
 
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
-  const imageCircleRef = useRef<HTMLDivElement>(null);
-  const animatedShapeRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const skillsRef = useRef<HTMLDivElement>(null);
   const buttonsRef = useRef<HTMLDivElement>(null);
@@ -22,12 +20,6 @@ const Hero = () => {
       { opacity: 0, x: -50 }, 
       { opacity: 1, x: 0, duration: 0.8, ease: "power2.out" }
     )
-    // Animate image circle from right
-    .fromTo(imageCircleRef.current, 
-      { opacity: 0, x: 50, scale: 0.8 }, 
-      { opacity: 1, x: 0, scale: 1, duration: 0.8, ease: "power2.out" }, 
-      "-=0.6"
-    )
     // Animate skills boxes
     .fromTo(skillsRef.current?.children || [], 
       { opacity: 0, y: 30 }, 
@@ -40,24 +32,6 @@ const Hero = () => {
       { opacity: 1, y: 0, duration: 0.6, stagger: 0.2, ease: "power2.out" }, 
       "-=0.3"
     );
-
-    // Animated shape behind circle
-    if (animatedShapeRef.current) {
-      gsap.to(animatedShapeRef.current, {
-        rotation: 360,
-        duration: 20,
-        repeat: -1,
-        ease: "none"
-      });
-
-      gsap.to(animatedShapeRef.current, {
-        scale: 1.1,
-        duration: 3,
-        repeat: -1,
-        yoyo: true,
-        ease: "power2.inOut"
-      });
-    }
   }, []);
 
   return (
@@ -78,9 +52,9 @@ const Hero = () => {
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-[1fr,0.6fr] gap-8 items-center">
-          {/* Left side - Content */}
-          <div ref={contentRef} className="space-y-8">
+        <div className="flex justify-center">
+          {/* Content */}
+          <div ref={contentRef} className="space-y-8 max-w-4xl">
             <div className="space-y-4">
               <TextReveal className="text-5xl md:text-6xl font-bold text-foreground leading-tight">
                 H!, I'm{' '}
@@ -88,11 +62,17 @@ const Hero = () => {
                   Siftain
                 </span>
               </TextReveal>
-              <TextReveal className="text-xl text-foreground/80 leading-relaxed max-w-[70%]" delay={0.3}>
-                A passionate 3rd year Computer Science student at BIT Mesra,
-                dedicated to exploring system programming, web development, 
-                and the fascinating world of computer architecture.
-              </TextReveal>
+              <div className="text-xl text-foreground/80 leading-relaxed">
+                <TextReveal delay={0.3}>
+                  A passionate 3rd year Computer Science student at BIT Mesra,
+                </TextReveal>
+                <TextReveal delay={0.5}>
+                  dedicated to exploring system programming, web development, 
+                </TextReveal>
+                <TextReveal delay={0.7}>
+                  and the fascinating world of computer architecture.
+                </TextReveal>
+              </div>
             </div>
 
             {/* Programming Languages */}
@@ -124,33 +104,6 @@ const Hero = () => {
               >
                 Get In Touch
               </MagneticButton>
-            </div>
-          </div>
-
-          {/* Right side - Image Circle */}
-          <div className="flex justify-start lg:justify-center">
-            <div className="relative">
-              {/* Animated background shape */}
-              <div
-                ref={animatedShapeRef}
-                className="absolute inset-0 w-80 h-80 rounded-full bg-gradient-to-r from-primary/20 to-accent/20 blur-xl"
-                style={{
-                  clipPath: 'polygon(50% 0%, 80% 10%, 100% 35%, 100% 70%, 80% 90%, 50% 100%, 20% 90%, 0% 70%, 0% 35%, 20% 10%)'
-                }}
-              />
-              
-              {/* Image circle */}
-              <div
-                ref={imageCircleRef}
-                className="relative w-80 h-80 rounded-full bg-gradient-to-br from-primary to-accent p-2 shadow-2xl"
-              >
-                <div className="w-full h-full rounded-full bg-background flex items-center justify-center overflow-hidden">
-                  {/* Placeholder for your image */}
-                  <div className="w-full h-full bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center">
-                    <span className="text-4xl font-bold text-primary-foreground">S</span>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
