@@ -65,7 +65,6 @@ const Navigation = () => {
     { name: 'Home', id: 'hero', icon: '🏠' },
     { name: 'Skills', id: 'skills', icon: '⚡' },
     { name: 'Projects', id: 'projects', icon: '💼' },
-    { name: 'Journey', id: 'journey', icon: '🚀' },
     { name: 'Contact', id: 'contact', icon: '📧' },
   ];
 
