@@ -14,7 +14,7 @@ const Contact = () => {
     {
       title: "Email",
       description: "Drop me a line anytime",
-      contact: "your@email.com",
+      contact: "ahmadsiftain89@gmail.com",
       action: "Send Email"
     },
     {

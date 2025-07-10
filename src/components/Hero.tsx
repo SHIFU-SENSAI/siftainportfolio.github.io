@@ -9,7 +9,7 @@ const Hero = () => {
   const skillsRef = useRef<HTMLDivElement>(null);
   const buttonsRef = useRef<HTMLDivElement>(null);
 
-  const programmingLanguages = ['C/C++', 'C#', 'JavaScript', 'Java', 'Assembly x86','Unity'];
+  const programmingLanguages = ['C/C++', 'C#', 'JavaScript', 'Java', 'Assembly x86','Unity','Next JS'];
 
   useEffect(() => {
     // Initial animations
